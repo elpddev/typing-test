@@ -11,6 +11,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@babel/core": "^7.19.3",
+    "@emotion/react": "^11.10.4",
+    "@mantine/core": "^5.5.5",
+    "@mantine/hooks": "^5.5.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
