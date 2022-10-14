@@ -1,19 +1,19 @@
-import { Box, Container } from '@mantine/core';
-import { Stack, NumberInput, Text, Group, Button } from '@mantine/core';
-import { useCallback, useEffect, useState } from 'react';
-import { wordBank } from './wordBank';
+import { Box, Container } from "@mantine/core";
+import { Stack, NumberInput, Text, Group, Button } from "@mantine/core";
+import { useCallback, useEffect, useState } from "react";
+import { wordBank } from "./wordBank";
 
 export function TypingGame() {
-  const {wpm, timeLeft, words, restart} = useTypingGame();
+  const { currentWordIndex, wpm, timeLeft, words, restart } = useTypingGame();
 
   return (
     <Container>
       <Stack align="center">
         <div>Game Title</div>
 
-        <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart}/>
+        <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
 
-        <WordsCard words={words}/>
+        <WordsCard words={words} currentWordIndex={currentWordIndex} />
 
         <TypingPanel />
       </Stack>
@@ -21,7 +21,11 @@ export function TypingGame() {
   );
 }
 
-function ActionBar({ wpm, timeLeft, onRestart }: {
+function ActionBar({
+  wpm,
+  timeLeft,
+  onRestart,
+}: {
   wpm: number;
   timeLeft: number;
   onRestart: () => void;
@@ -29,42 +33,50 @@ function ActionBar({ wpm, timeLeft, onRestart }: {
   return (
     <Group>
       <Text>WPM</Text>
-      <NumberInput disabled value={wpm}/>
+      <NumberInput disabled value={wpm} />
 
       <Text>Time left</Text>
-      <NumberInput disabled value={timeLeft}/>
+      <NumberInput disabled value={timeLeft} />
 
       <Button onClick={onRestart}>Restart</Button>
-    </Group>
-  )
-}
-
-function WordsCard({ words }: {
-  words: GameWord[];
-}) {
-  return (
-    <Group position="center">
-      {words.map((word, index) => <WordCard key={index} word={word}/>)}
     </Group>
   );
 }
 
-function WordCard({ word }: {
-  word: GameWord;
+function WordsCard({
+  currentWordIndex,
+  words,
+}: {
+  currentWordIndex: number;
+  words: GameWord[];
 }) {
-  return (<Box component='span'>
-    {word.letters.map(letter => <LetterCard letter={letter}/>)}
-  </Box>);
+  return (
+    <Group position="center">
+      {words.map((word, index) => (
+        <WordCard key={index} word={word} highlight={index === currentWordIndex}/>
+      ))}
+    </Group>
+  );
 }
 
-function LetterCard({ letter }: {
-  letter: GameLetter;
-}) {
-  return <Text component='span'>{letter.letter}</Text>;
+function WordCard({ highlight, word }: { highlight: boolean; word: GameWord }) {
+  return (
+    <Box component="span" sx={{
+      backgroundColor: highlight ? 'lightgreen' : 'none',
+    }}>
+      {word.letters.map((letter) => (
+        <LetterCard letter={letter} />
+      ))}
+    </Box>
+  );
+}
+
+function LetterCard({ letter }: { letter: GameLetter }) {
+  return <Text component="span">{letter.letter}</Text>;
 }
 
 function TypingPanel() {
-  return (<div>Typing panel</div>);
+  return <div>Typing panel</div>;
 }
 
 enum GameStatus {
@@ -82,25 +94,19 @@ enum SuccessStatus {
 class GameLetter {
   success: SuccessStatus = SuccessStatus.Initial;
 
-  constructor(
-    readonly letter: string,
-  ) {
-
-  }
+  constructor(readonly letter: string) {}
 }
 
 class GameWord {
   success: SuccessStatus = SuccessStatus.Initial;
   letters: GameLetter[] = [];
 
-  constructor(
-    word: string,
-  ) {
-    this.letters = this.calcLetters(word);    
+  constructor(word: string) {
+    this.letters = this.calcLetters(word);
   }
 
   private calcLetters(word: string): GameLetter[] {
-    return Array.from(word).map(letter => new GameLetter(letter));
+    return Array.from(word).map((letter) => new GameLetter(letter));
   }
 }
 
@@ -109,12 +115,14 @@ function useTypingGame() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Initial);
   const [words, setWords] = useState<GameWord[]>([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   const restart = useCallback(() => {
     setWpm(0);
     setTimeLeft(60);
     setGameStatus(GameStatus.Initial);
     setWords(calcGameWords());
+    setCurrentWordIndex(0);
   }, []);
 
   useEffect(() => {
@@ -122,16 +130,17 @@ function useTypingGame() {
   }, [restart]);
 
   return {
+    currentWordIndex,
     wpm,
     words,
     timeLeft,
-    restart
+    restart,
   };
 }
 
 function calcGameWords(): GameWord[] {
   // todo: calc amount based on fixed characters count. for accurate stats.
-  const amount = 18;   
+  const amount = 18;
   const bank = [...wordBank];
   const words = [];
 
@@ -142,7 +151,7 @@ function calcGameWords(): GameWord[] {
     words.push(word);
   }
 
-  const gameWords = words.map(word => new GameWord(word));
+  const gameWords = words.map((word) => new GameWord(word));
 
   return gameWords;
 }
