@@ -1,6 +1,7 @@
 import { Container } from '@mantine/core';
 import { Stack, NumberInput, Text, Group, Button } from '@mantine/core';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { wordBank } from './wordBank';
 
 export function TypingGame() {
   const {wpm, timeLeft, restart} = useTypingGame();
@@ -52,18 +53,74 @@ enum GameStatus {
   Done,
 }
 
+enum SuccessStatus {
+  Initial,
+  Fail,
+  Success,
+}
+
+class GameLetter {
+  success: SuccessStatus = SuccessStatus.Initial;
+
+  constructor(
+    readonly letter: string,
+  ) {
+
+  }
+}
+
+class GameWord {
+  success: SuccessStatus = SuccessStatus.Initial;
+  letters: GameLetter[] = [];
+
+  constructor(
+    word: string,
+  ) {
+    this.letters = this.calcLetters(word);    
+  }
+
+  private calcLetters(word: string): GameLetter[] {
+    return Array.from(word).map(letter => new GameLetter(letter));
+  }
+}
+
 function useTypingGame() {
   const [wpm, setWpm] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Initial);
+  const [words, setWords] = useState<GameWord[]>([]);
 
   const restart = useCallback(() => {
-    console.log('** restart');
+    setWpm(0);
+    setTimeLeft(60);
+    setGameStatus(GameStatus.Initial);
+    setWords(calcGameWords());
   }, []);
+
+  useEffect(() => {
+    restart();
+  }, [restart]);
 
   return {
     wpm,
     timeLeft,
     restart
   };
+}
+
+function calcGameWords(): GameWord[] {
+  const amount = 18;   
+  const bank = [...wordBank];
+  const words = [];
+
+  for (let i = 0; i < amount; i += 1) {
+    const nextIndex = Math.floor(Math.random() * bank.length);
+    const word = bank[nextIndex];
+    bank.splice(nextIndex, 1);
+    words.push(word);
+  }
+
+  const gameWords = words.map(word => new GameWord(word));
+
+  return gameWords;
 }
