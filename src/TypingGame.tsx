@@ -1,10 +1,10 @@
-import { Container } from '@mantine/core';
+import { Box, Container } from '@mantine/core';
 import { Stack, NumberInput, Text, Group, Button } from '@mantine/core';
 import { useCallback, useEffect, useState } from 'react';
 import { wordBank } from './wordBank';
 
 export function TypingGame() {
-  const {wpm, timeLeft, restart} = useTypingGame();
+  const {wpm, timeLeft, words, restart} = useTypingGame();
 
   return (
     <Container>
@@ -13,7 +13,7 @@ export function TypingGame() {
 
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart}/>
 
-        <WordsCard />
+        <WordsCard words={words}/>
 
         <TypingPanel />
       </Stack>
@@ -39,8 +39,28 @@ function ActionBar({ wpm, timeLeft, onRestart }: {
   )
 }
 
-function WordsCard() {
-  return (<div>Word card</div>);
+function WordsCard({ words }: {
+  words: GameWord[];
+}) {
+  return (
+    <Group position="center">
+      {words.map((word, index) => <WordCard key={index} word={word}/>)}
+    </Group>
+  );
+}
+
+function WordCard({ word }: {
+  word: GameWord;
+}) {
+  return (<Box component='span'>
+    {word.letters.map(letter => <LetterCard letter={letter}/>)}
+  </Box>);
+}
+
+function LetterCard({ letter }: {
+  letter: GameLetter;
+}) {
+  return <Text component='span'>{letter.letter}</Text>;
 }
 
 function TypingPanel() {
@@ -103,12 +123,14 @@ function useTypingGame() {
 
   return {
     wpm,
+    words,
     timeLeft,
     restart
   };
 }
 
 function calcGameWords(): GameWord[] {
+  // todo: calc amount based on fixed characters count. for accurate stats.
   const amount = 18;   
   const bank = [...wordBank];
   const words = [];
