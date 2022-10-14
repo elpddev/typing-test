@@ -1,5 +1,9 @@
+import { MantineProvider } from "@mantine/core";
+
 function App() {
-  return <div className="App"></div>;
+  <MantineProvider withGlobalStyles withNormalizeCSS>
+    <div></div>
+  </MantineProvider>;
 }
 
 export default App;
