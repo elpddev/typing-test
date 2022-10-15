@@ -1,4 +1,6 @@
-#  Typing Test - Example project for typing tester in React
+#  Typing Test
+
+Example project for typing tester in React
 
 This project shows an example of typing test implementation in React.
 
