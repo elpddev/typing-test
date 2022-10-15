@@ -8,6 +8,8 @@ This project shows an example of typing test implementation in React.
 1. React hooks
 1. Functional store state calculation
 
+Example of a running project can be seen in [github pages deployment](https://elpddev.github.io/typing-test/)
+
 ## Main Elements
 * Component - TypingGame
 * Hook - useTypeingGame
