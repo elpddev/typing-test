@@ -1,6 +1,6 @@
 import { TextInput } from "@mantine/core";
 import { useCallback } from "react";
-import { KeyCode } from "./KeyCode";
+import { KeyCode } from "../KeyCode";
 
 export function TypingPanel({
   value, onTyping,
