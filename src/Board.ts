@@ -14,7 +14,7 @@ export class Board {
 
   static init() {
     const item = new Board();
-    item.words = Board.generateWords(3);
+    item.words = Board.generateWords(10);
     item.successStatus = SuccessStatus.Initial;
     item.currentWordIndex = 0;
     item.currentWordLetterIndex = 0;

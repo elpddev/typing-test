@@ -14,7 +14,7 @@ export function TypingPanel({
     <TextInput
       value={value}
       onKeyDown={(event) => {
-        console.log('** onKeyDown', event);
+        // console.log('** onKeyDown', event);
         onTyping(event.key, event.code as KeyCode);
       }}
       onChange={onChange} />

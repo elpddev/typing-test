@@ -21,7 +21,7 @@ export function TypingGame() {
   return (
     <Container>
       <Stack align="center">
-        <div>Game Title</div>
+        <div>Typing Test</div>
 
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
 
