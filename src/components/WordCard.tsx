@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core";
+import { Box, Group } from "@mantine/core";
 import { Word } from "../Word";
 import { LetterCard } from "./LetterCard";
 
@@ -12,19 +12,20 @@ export function WordCard({
   currentLetterIndex: number;
 }) {
   return (
-    <Box
-      component="span"
+    <Group
+      spacing={3}
       sx={{
-        backgroundColor: isCurrent ? "lightgreen" : "none",
+        backgroundColor: isCurrent ? "lightgray" : "none",
       }}
     >
       {word.letters.map((letter, index) => (
         <LetterCard
           key={index}
           letter={letter}
+          isHighlight={isCurrent}
           isCurrent={isCurrent && index === currentLetterIndex}
         />
       ))}
-    </Box>
+    </Group>
   );
 }

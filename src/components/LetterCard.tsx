@@ -3,8 +3,13 @@ import { useMemo } from "react";
 import { Letter } from "../Letter";
 import { SuccessStatus } from "../SuccessStatus";
 
-export function LetterCard({ letter, isCurrent }: { letter: Letter; isCurrent: boolean; }) {
-  const style = useMemo(() => styleLetterCard(letter, isCurrent), [letter, isCurrent]);
+export function LetterCard({ letter, isCurrent, isHighlight }: { 
+  letter: Letter; 
+  isCurrent: boolean; 
+  isHighlight: boolean;
+}) {
+  const style = useMemo(() => styleLetterCard(letter, isCurrent, isHighlight), [letter, isCurrent, isHighlight]);
+
   if (isCurrent) {
     console.log('style', style)
   }
@@ -19,8 +24,9 @@ export function LetterCard({ letter, isCurrent }: { letter: Letter; isCurrent: b
   );
 }
 
-function styleLetterCard(letter: Letter, isCurrent: boolean): Record<string, any> {
+function styleLetterCard(letter: Letter, isCurrent: boolean, isHighlight: boolean): Record<string, any> {
   const color = styleColor(letter);
+  const backgroundColor = styleBackgroundColor(isHighlight, isCurrent);
   let borderLeft = '';
 
   if (isCurrent) {
@@ -30,6 +36,7 @@ function styleLetterCard(letter: Letter, isCurrent: boolean): Record<string, any
   return {
     color,
     borderLeft,
+    backgroundColor,
   };
 }
 
@@ -43,4 +50,12 @@ function styleColor(letter: Letter) {
     }
 
     return "black";
+}
+
+function styleBackgroundColor(isHighlight: boolean, isCurrent: boolean) {
+  if (isCurrent) {
+    return 'lightgreen';
+  }
+
+  return 'none';
 }
