@@ -10,6 +10,11 @@
     "format": "prettier --write .",
     "prepare": "husky install"
   },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Eyal Lapid",
+    "url": "https://eyallapid.me"
+  },
   "dependencies": {
     "@babel/core": "^7.19.3",
     "@emotion/react": "^11.10.4",
