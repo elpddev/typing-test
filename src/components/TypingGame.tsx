@@ -8,15 +8,20 @@ import { TypingPanel } from "./TypingPanel";
 import { WordsCard } from "./WordsCard";
 
 export function TypingGame() {
-  const {
-    currentWordIndex,
-    wpm,
-    timeLeft,
-    board,
-    typingValue,
-    restart,
-    onTyping,
-  } = useTypingGame();
+  const { typingEvent } = useTypingCapture();
+
+  const { currentWordIndex, wpm, timeLeft, board, restart, onTyping } =
+    useTypingGame();
+
+  useEffect(() => {
+    if (!typingEvent) {
+      return;
+    }
+
+    console.log("** effect typing");
+
+    onTyping(typingEvent.code, typingEvent.char);
+  }, [typingEvent, onTyping]);
 
   return (
     <Container>
@@ -26,25 +31,37 @@ export function TypingGame() {
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
 
         <WordsCard board={board} />
-
-        <TypingPanel value={typingValue} onTyping={onTyping} />
       </Stack>
     </Container>
   );
 }
 
-enum GameStatus {
-  Initial,
-  InProgress,
-  Done,
+function useTypingCapture() {
+  const [typingEvent, setTypingEvent] = useState<{
+    code: KeyCode;
+    char: string;
+  } | null>(null);
+  const typingCallback = useCallback((event: KeyboardEvent) => {
+    setTypingEvent({ code: event.code as KeyCode, char: event.key });
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", typingCallback);
+
+    return () => {
+      document.removeEventListener("keydown", typingCallback);
+    };
+  }, [typingCallback]);
+
+  return {
+    typingEvent,
+  };
 }
 
 function useTypingGame() {
   const [wpm, setWpm] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
-  const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Initial);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [typingValue, setTypingValue] = useState("");
 
   const [board, setBoard] = useState(Board.init());
@@ -53,13 +70,12 @@ function useTypingGame() {
     setBoard(Board.init());
   }, []);
 
-  const onTyping = useCallback(
-    (char: string, keyCode: KeyCode) => {
-      const nextBoard = Board.moveByKey(char, keyCode, board);
-      setBoard(nextBoard);
-    },
-    [board]
-  );
+  const onTyping = useCallback((code: KeyCode, char: string) => {
+    setBoard((board) => {
+      const nextBoard = Board.moveByKey(char, code, board);
+      return nextBoard;
+    });
+  }, []);
 
   useEffect(() => {
     restart();
@@ -75,4 +91,3 @@ function useTypingGame() {
     onTyping,
   };
 }
-

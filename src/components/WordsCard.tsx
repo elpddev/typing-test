@@ -5,7 +5,7 @@ import { WordCard } from "./WordCard";
 export function WordsCard({ board }: { board: Board }) {
   return (
     <ScrollArea style={{ height: 250 }}>
-      <Group position="center" spacing={7}>
+      <Group position="center" spacing={12}>
         {board.words.map((word, index) => (
           <WordCard
             key={index}
