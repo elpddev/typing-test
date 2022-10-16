@@ -37,6 +37,7 @@ function styleLetterCard(letter: Letter, isCurrent: boolean, isHighlight: boolea
     color,
     borderLeft,
     backgroundColor,
+    fontSize: '28px',
   };
 }
 
