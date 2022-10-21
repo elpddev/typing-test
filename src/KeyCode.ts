@@ -28,5 +28,5 @@ export enum KeyCode {
   KeyX = "KeyX",
   KeyY = "KeyY",
   KeyZ = "KeyZ",
-  Space = "Space"
+  Space = "Space",
 }

@@ -3,12 +3,13 @@ import { useCallback } from "react";
 import { KeyCode } from "../KeyCode";
 
 export function TypingPanel({
-  value, onTyping,
+  value,
+  onTyping,
 }: {
   value: string;
   onTyping: (char: string, code: KeyCode) => void;
 }) {
-  const onChange = useCallback(() => { }, []);
+  const onChange = useCallback(() => {}, []);
 
   return (
     <TextInput
@@ -17,6 +18,7 @@ export function TypingPanel({
         // console.log('** onKeyDown', event);
         onTyping(event.key, event.code as KeyCode);
       }}
-      onChange={onChange} />
+      onChange={onChange}
+    />
   );
 }
