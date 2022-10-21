@@ -1,6 +1,6 @@
 import { KeyCode } from "../KeyCode";
 import { wordBank } from "../data/wordBank";
-import { getRandomItem } from "../getRandomItem";
+import { getRandomItem } from "../utils/getRandomItem";
 import * as WordMod from "./Word";
 import { Word } from "./Word";
 import * as LetterMod from "./Letter";
