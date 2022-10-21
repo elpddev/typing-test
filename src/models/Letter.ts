@@ -1,5 +1,5 @@
-import { DisplayType } from "../DisplayType";
-import { SuccessStatus } from "../SuccessStatus";
+import { DisplayType } from "./DisplayType";
+import { SuccessStatus } from "./SuccessStatus";
 
 export interface Letter {
   char: string;

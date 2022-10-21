@@ -1,6 +1,6 @@
-import { DisplayType } from "../DisplayType";
+import { DisplayType } from "./DisplayType";
 import { Letter } from "./Letter";
-import { SuccessStatus } from "../SuccessStatus";
+import { SuccessStatus } from "./SuccessStatus";
 
 export function replaceLetter(
   newLetter: Letter,

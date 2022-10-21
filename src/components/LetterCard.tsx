@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
 import { useMemo } from "react";
-import { Letter } from "../Letter";
-import { SuccessStatus } from "../SuccessStatus";
+import { Letter } from "../models/Letter";
+import { SuccessStatus } from "../models/SuccessStatus";
 
 export function LetterCard({ letter, isCurrent, isHighlight }: { 
   letter: Letter; 
