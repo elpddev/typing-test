@@ -1,7 +1,8 @@
 import { KeyCode } from "../KeyCode";
 import { wordBank } from "../wordBank";
 import { getRandomItem } from "../getRandomItem";
-import { Word } from "./Word";
+import * as WordMod from "./Word";
+import { Word } from './Word';
 import { Letter } from "../Letter";
 import { SuccessStatus } from "../SuccessStatus";
 
@@ -38,7 +39,7 @@ export function generateWords(amount: number): Word[] {
 
   for (let i = 0; i < amount; i += 1) {
     const nextWord = getRandomItem(wordBank);
-    const nextGameWord = Word.init(nextWord);
+    const nextGameWord = WordMod.init(nextWord);
     gameWords.push(nextGameWord);
   }
 
@@ -85,7 +86,7 @@ export function moveNextLetterByKey(
     newLetter.successStatus = SuccessStatus.Fail;
   }
 
-  const newWord = Word.replaceLetter(
+  const newWord = WordMod.replaceLetter(
     newLetter,
     board.currentWordLetterIndex,
     currWord
@@ -170,7 +171,7 @@ export function resetSuccessCurrentLetter(board: Board): Board {
 
   newLetter.successStatus = SuccessStatus.Initial;
 
-  const newWord = Word.replaceLetter(
+  const newWord = WordMod.replaceLetter(
     newLetter,
     board.currentWordLetterIndex,
     currWord
