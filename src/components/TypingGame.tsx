@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ActionBar } from "./ActionBar";
 import { KeyCode } from "../KeyCode";
 import { WordsCard } from "./WordsCard";
-import { init, moveByKey } from "../Board";
+import { init, moveByKey } from "../models/Board";
 
 export function TypingGame() {
   const { typingEvent } = useTypingCapture();

@@ -1,9 +1,9 @@
-import { KeyCode } from "./KeyCode";
-import { wordBank } from "./wordBank";
-import { getRandomItem } from "./getRandomItem";
-import { Word } from "./Word";
-import { Letter } from "./Letter";
-import { SuccessStatus } from "./SuccessStatus";
+import { KeyCode } from "../KeyCode";
+import { wordBank } from "../wordBank";
+import { getRandomItem } from "../getRandomItem";
+import { Word } from "../Word";
+import { Letter } from "../Letter";
+import { SuccessStatus } from "../SuccessStatus";
 
 export interface Board {
   words: Word[];

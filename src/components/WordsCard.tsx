@@ -1,5 +1,5 @@
 import { Group, ScrollArea } from "@mantine/core";
-import { Board } from "../Board";
+import { Board } from "../models/Board";
 import { WordCard } from "./WordCard";
 
 export function WordsCard({ board }: { board: Board }) {
