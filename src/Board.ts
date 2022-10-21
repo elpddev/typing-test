@@ -5,185 +5,199 @@ import { Word } from "./Word";
 import { Letter } from "./Letter";
 import { SuccessStatus } from "./SuccessStatus";
 
-// todo: refactor to functional interface and functions
-export class Board {
-  words: Word[] = [];
-  successStatus: SuccessStatus = SuccessStatus.Initial;
-  currentWordIndex: number = 0;
-  currentWordLetterIndex: number = 0;
+export interface Board {
+  words: Word[];
+  successStatus: SuccessStatus;
+  currentWordIndex: number;
+  currentWordLetterIndex: number;
+}
 
-  static init() {
-    const item = new Board();
-    item.words = Board.generateWords(10);
-    item.successStatus = SuccessStatus.Initial;
-    item.currentWordIndex = 0;
-    item.currentWordLetterIndex = 0;
+export function init(): Board {
+  const item = {
+    words: generateWords(10),
+    successStatus: SuccessStatus.Initial,
+    currentWordIndex: 0,
+    currentWordLetterIndex: 0,
+  };
 
-    return item;
+  return item;
+}
+
+export function clone(board: Board): Board {
+  const item = init();
+  item.words = [...board.words];
+  item.successStatus = board.successStatus;
+  item.currentWordIndex = board.currentWordIndex;
+  item.currentWordLetterIndex = board.currentWordLetterIndex;
+
+  return item;
+}
+
+export function generateWords(amount: number): Word[] {
+  const gameWords = [];
+
+  for (let i = 0; i < amount; i += 1) {
+    const nextWord = getRandomItem(wordBank);
+    const nextGameWord = Word.init(nextWord);
+    gameWords.push(nextGameWord);
   }
 
-  static clone(board: Board) {
-    const item = new Board();
-    item.words = [...board.words];
-    item.successStatus = board.successStatus;
-    item.currentWordIndex = board.currentWordIndex;
-    item.currentWordLetterIndex = board.currentWordLetterIndex;
+  return gameWords;
+}
 
-    return item;
-  }
-
-  static generateWords(amount: number): Word[] {
-    const gameWords = [];
-
-    for (let i = 0; i < amount; i += 1) {
-      const nextWord = getRandomItem(wordBank);
-      const nextGameWord = Word.init(nextWord);
-      gameWords.push(nextGameWord);
+export function moveByKey(char: string, code: KeyCode, board: Board): Board {
+  if (code === KeyCode.Backspace) {
+    if (isAtStartOfFirstWord(board)) {
+      return board;
     }
 
-    return gameWords;
+    return moveBackward(board);
   }
 
-  static moveByKey(char: string, code: KeyCode, board: Board) {
-    if (code === KeyCode.Backspace) {
-      if (Board.isAtStartOfFirstWord(board)) {
-        return board;
-      }
-
-      return Board.moveBackward(board);
-    }
-
-    if (code === KeyCode.Space) {
-      if (board.currentWordLetterIndex === 0) {
-        return board;
-      }
-
-      if (board.currentWordIndex === board.words.length - 1) {
-        return board;
-      }
-
-      return Board.moveForwardWord(board);
-    }
-
-    return Board.moveNextLetterByKey(board, char, code);
-  }
-
-  static moveNextLetterByKey(board: Board, char: string, code: KeyCode) {
-    const currWord = board.words[board.currentWordIndex];
-    const currLetter = currWord.letters[board.currentWordLetterIndex];
-
-    const newLetter = Letter.clone(currLetter);
-
-    if (currLetter.char === char) {
-      newLetter.successStatus = SuccessStatus.Success;
-    } else {
-      newLetter.successStatus = SuccessStatus.Fail;
-    }
-
-    const newWord = Word.replaceLetter(newLetter, board.currentWordLetterIndex, currWord);
-
-    const newBoard = Board.replaceWord(newWord, board.currentWordIndex, board);
-    if (newBoard.currentWordLetterIndex === newWord.letters.length - 1) {
-      newBoard.currentWordLetterIndex = 0;
-      newBoard.currentWordIndex += 1;
-    } else {
-      newBoard.currentWordLetterIndex += 1;
-    }
-
-    return newBoard;
-  }
-
-  static replaceWord(newWord: Word, index: number, board: Board): Board {
-    const newWords = [...board.words];
-    newWords.splice(index, 1, newWord);
-
-    const newBoard = Board.clone(board);
-    newBoard.words = newWords;
-
-    return newBoard;
-  }
-
-  static isAtStartOfFirstWord(board: Board): boolean {
-    return board.currentWordIndex === 0 && board.currentWordLetterIndex === 0;
-  }
-
-  static moveBackward(board: Board) {
+  if (code === KeyCode.Space) {
     if (board.currentWordLetterIndex === 0) {
-      if (board.currentWordIndex === 0) {
-        return board;
-      }
-
-      return Board.moveBackwardWord(board);
+      return board;
     }
 
-    return Board.moveBackwardInWord(board);
+    if (board.currentWordIndex === board.words.length - 1) {
+      return board;
+    }
+
+    return moveForwardWord(board);
   }
 
-  static moveMarkerBackwardWord(board: Board) {
-    const nextBoard = Board.clone(board);
-    nextBoard.currentWordIndex -= 1;
+  return moveNextLetterByKey(board, char, code);
+}
 
-    const currWord = nextBoard.words[nextBoard.currentWordIndex];
+export function moveNextLetterByKey(
+  board: Board,
+  char: string,
+  code: KeyCode
+): Board {
+  const currWord = board.words[board.currentWordIndex];
+  const currLetter = currWord.letters[board.currentWordLetterIndex];
+
+  const newLetter = Letter.clone(currLetter);
+
+  if (currLetter.char === char) {
+    newLetter.successStatus = SuccessStatus.Success;
+  } else {
+    newLetter.successStatus = SuccessStatus.Fail;
+  }
+
+  const newWord = Word.replaceLetter(
+    newLetter,
+    board.currentWordLetterIndex,
+    currWord
+  );
+
+  const newBoard = replaceWord(newWord, board.currentWordIndex, board);
+  if (newBoard.currentWordLetterIndex === newWord.letters.length - 1) {
+    newBoard.currentWordLetterIndex = 0;
+    newBoard.currentWordIndex += 1;
+  } else {
+    newBoard.currentWordLetterIndex += 1;
+  }
+
+  return newBoard;
+}
+
+export function replaceWord(newWord: Word, index: number, board: Board): Board {
+  const newWords = [...board.words];
+  newWords.splice(index, 1, newWord);
+
+  const newBoard = clone(board);
+  newBoard.words = newWords;
+
+  return newBoard;
+}
+
+export function isAtStartOfFirstWord(board: Board): boolean {
+  return board.currentWordIndex === 0 && board.currentWordLetterIndex === 0;
+}
+
+export function moveBackward(board: Board): Board {
+  if (board.currentWordLetterIndex === 0) {
+    if (board.currentWordIndex === 0) {
+      return board;
+    }
+
+    return moveBackwardWord(board);
+  }
+
+  return moveBackwardInWord(board);
+}
+
+export function moveMarkerBackwardWord(board: Board): Board {
+  const nextBoard = clone(board);
+  nextBoard.currentWordIndex -= 1;
+
+  const currWord = nextBoard.words[nextBoard.currentWordIndex];
+  nextBoard.currentWordLetterIndex = currWord.letters.length - 1;
+
+  return nextBoard;
+}
+
+export function moveMarkerBackwardWordToLastInitial(board: Board): Board {
+  const nextBoard = clone(board);
+  nextBoard.currentWordIndex -= 1;
+
+  const currWord = nextBoard.words[nextBoard.currentWordIndex];
+  const lastInitialLetterIndex = currWord.letters.findIndex(
+    (letter) => letter.successStatus === SuccessStatus.Initial
+  );
+  if (lastInitialLetterIndex >= 0) {
+    nextBoard.currentWordLetterIndex = lastInitialLetterIndex;
+  } else {
     nextBoard.currentWordLetterIndex = currWord.letters.length - 1;
-
-    return nextBoard;
   }
 
-  static moveMarkerBackwardWordToLastInitial(board: Board) {
-    const nextBoard = Board.clone(board);
-    nextBoard.currentWordIndex -= 1;
+  return nextBoard;
+}
 
-    const currWord = nextBoard.words[nextBoard.currentWordIndex];
-    const lastInitialLetterIndex = currWord.letters.findIndex(letter => letter.successStatus === SuccessStatus.Initial);
-    if (lastInitialLetterIndex >= 0) {
-      nextBoard.currentWordLetterIndex = lastInitialLetterIndex;
-    } else {
-      nextBoard.currentWordLetterIndex = currWord.letters.length - 1;
-    }
+export function moveBackwardWord(board: Board): Board {
+  let nextBoard = moveMarkerBackwardWordToLastInitial(board);
+  nextBoard = resetSuccessCurrentLetter(nextBoard);
 
-    return nextBoard;
-  }
+  return nextBoard;
+}
 
-  static moveBackwardWord(board: Board) {
-    let nextBoard = Board.moveMarkerBackwardWordToLastInitial(board);
-    nextBoard = Board.resetSuccessCurrentLetter(nextBoard);
+export function resetSuccessCurrentLetter(board: Board): Board {
+  const currWord = board.words[board.currentWordIndex];
+  const currLetter = currWord.letters[board.currentWordLetterIndex];
 
-    return nextBoard;
-  }
+  const newLetter = Letter.clone(currLetter);
 
-  static resetSuccessCurrentLetter(board: Board): Board {
-    const currWord = board.words[board.currentWordIndex];
-    const currLetter = currWord.letters[board.currentWordLetterIndex];
+  newLetter.successStatus = SuccessStatus.Initial;
 
-    const newLetter = Letter.clone(currLetter);
+  const newWord = Word.replaceLetter(
+    newLetter,
+    board.currentWordLetterIndex,
+    currWord
+  );
+  const newBoard = replaceWord(newWord, board.currentWordIndex, board);
 
-    newLetter.successStatus = SuccessStatus.Initial;
+  return newBoard;
+}
 
-    const newWord = Word.replaceLetter(newLetter, board.currentWordLetterIndex, currWord);
-    const newBoard = Board.replaceWord(newWord, board.currentWordIndex, board);
+export function moveMarketBackwardInWord(board: Board): Board {
+  const nextBoard = clone(board);
+  nextBoard.currentWordLetterIndex -= 1;
 
-    return newBoard;
-  }
+  return nextBoard;
+}
 
-  static moveMarketBackwardInWord(board: Board): Board {
-    const nextBoard = Board.clone(board);
-    nextBoard.currentWordLetterIndex -= 1;
+export function moveBackwardInWord(board: Board): Board {
+  let nextBoard = moveMarketBackwardInWord(board);
+  nextBoard = resetSuccessCurrentLetter(nextBoard);
 
-    return nextBoard;
-  }
+  return nextBoard;
+}
 
-  static moveBackwardInWord(board: Board) {
-    let nextBoard = Board.moveMarketBackwardInWord(board);
-    nextBoard = Board.resetSuccessCurrentLetter(nextBoard);
+export function moveForwardWord(board: Board): Board {
+  const nextBoard = clone(board);
+  nextBoard.currentWordIndex += 1;
+  nextBoard.currentWordLetterIndex = 0;
 
-    return nextBoard;
-  }
-
-  static moveForwardWord(board: Board) {
-    const nextBoard = Board.clone(board);
-    nextBoard.currentWordIndex += 1;
-    nextBoard.currentWordLetterIndex = 0;
-
-    return nextBoard;
-  }
+  return nextBoard;
 }
