@@ -1,11 +1,9 @@
-import {
-  NumberInput, Text,
-  Group,
-  Button
-} from "@mantine/core";
+import { NumberInput, Text, Group, Button } from "@mantine/core";
 
 export function ActionBar({
-  wpm, timeLeft, onRestart,
+  wpm,
+  timeLeft,
+  onRestart,
 }: {
   wpm: number;
   timeLeft: number;
