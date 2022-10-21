@@ -3,7 +3,7 @@ import { wordBank } from "../wordBank";
 import { getRandomItem } from "../getRandomItem";
 import * as WordMod from "./Word";
 import { Word } from "./Word";
-import { Letter } from "./Letter";
+import * as LetterMod from "./Letter";
 import { SuccessStatus } from "./SuccessStatus";
 
 export interface Board {
@@ -78,7 +78,7 @@ export function moveNextLetterByKey(
   const currWord = board.words[board.currentWordIndex];
   const currLetter = currWord.letters[board.currentWordLetterIndex];
 
-  const newLetter = Letter.clone(currLetter);
+  const newLetter = LetterMod.clone(currLetter);
 
   if (currLetter.char === char) {
     newLetter.successStatus = SuccessStatus.Success;
@@ -167,7 +167,7 @@ export function resetSuccessCurrentLetter(board: Board): Board {
   const currWord = board.words[board.currentWordIndex];
   const currLetter = currWord.letters[board.currentWordLetterIndex];
 
-  const newLetter = Letter.clone(currLetter);
+  const newLetter = LetterMod.clone(currLetter);
 
   newLetter.successStatus = SuccessStatus.Initial;
 
