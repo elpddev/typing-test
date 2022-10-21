@@ -33,10 +33,3 @@ Uses functional pattern of:
 1. Simple structural representation of the pieces state. Board/Word/Letter.
 1. Immutable functions per module for mutating the state for easier reasoning about state changes.
 1. Smart immutable - tree include changed branch and unchanged branches - So change detection will stop at unchanged branches.
-
-## Todo
-
-1. Add timer functionality
-1. Measure statistics
-1. Implement restart
-1. Refactor state to support space as part of tying. Currently space is navigational key only
