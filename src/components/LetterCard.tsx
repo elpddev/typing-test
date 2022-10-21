@@ -10,10 +10,6 @@ export function LetterCard({ letter, isCurrent, isHighlight }: {
 }) {
   const style = useMemo(() => styleLetterCard(letter, isCurrent, isHighlight), [letter, isCurrent, isHighlight]);
 
-  if (isCurrent) {
-    console.log('style', style)
-  }
-
   return (
     <Text
       component="span"
