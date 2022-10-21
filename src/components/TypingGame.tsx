@@ -3,9 +3,8 @@ import { Stack } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { ActionBar } from "./ActionBar";
 import { KeyCode } from "../KeyCode";
-import { Board } from "../Board";
-import { TypingPanel } from "./TypingPanel";
 import { WordsCard } from "./WordsCard";
+import { init, moveByKey } from "../models/Board";
 
 export function TypingGame() {
   const { typingEvent } = useTypingCapture();
@@ -17,8 +16,6 @@ export function TypingGame() {
     if (!typingEvent) {
       return;
     }
-
-    console.log("** effect typing");
 
     onTyping(typingEvent.code, typingEvent.char);
   }, [typingEvent, onTyping]);
@@ -64,15 +61,15 @@ function useTypingGame() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typingValue, setTypingValue] = useState("");
 
-  const [board, setBoard] = useState(Board.init());
+  const [board, setBoard] = useState(init());
 
   const restart = useCallback(() => {
-    setBoard(Board.init());
+    setBoard(init());
   }, []);
 
   const onTyping = useCallback((code: KeyCode, char: string) => {
     setBoard((board) => {
-      const nextBoard = Board.moveByKey(char, code, board);
+      const nextBoard = moveByKey(char, code, board);
       return nextBoard;
     });
   }, []);
