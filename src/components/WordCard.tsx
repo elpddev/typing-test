@@ -1,5 +1,5 @@
 import { Box, Group } from "@mantine/core";
-import { Word } from "../Word";
+import { Word } from "../models/Word";
 import { LetterCard } from "./LetterCard";
 
 export function WordCard({

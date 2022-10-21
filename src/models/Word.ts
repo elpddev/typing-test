@@ -1,6 +1,6 @@
-import { DisplayType } from "./DisplayType";
-import { Letter } from "./Letter";
-import { SuccessStatus } from "./SuccessStatus";
+import { DisplayType } from "../DisplayType";
+import { Letter } from "../Letter";
+import { SuccessStatus } from "../SuccessStatus";
 
 export class Word {
   static replaceLetter(newLetter: Letter, index: number, word: Word) {
