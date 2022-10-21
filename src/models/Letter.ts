@@ -1,26 +1,27 @@
 import { DisplayType } from "../DisplayType";
 import { SuccessStatus } from "../SuccessStatus";
 
-export class Letter {
-  char: string = "";
-  successStatus: SuccessStatus = SuccessStatus.Initial;
-  displayType: DisplayType = DisplayType.Initial;
+export interface Letter {
+  char: string;
+  successStatus: SuccessStatus;
+  displayType: DisplayType;
+}
 
-  static init(char: string): Letter {
-    const item = new Letter();
-    item.successStatus = SuccessStatus.Initial;
-    item.displayType = DisplayType.Initial;
-    item.char = char;
+export function init(char: string): Letter {
+  const item = {
+    successStatus: SuccessStatus.Initial,
+    displayType: DisplayType.Initial,
+    char,
+  };
 
-    return item;
-  }
+  return item;
+}
 
-  static clone(letter: Letter): Letter {
-    const item = new Letter();
-    item.successStatus = letter.successStatus;
-    item.displayType = letter.displayType;
-    item.char = letter.char;
+export function clone(letter: Letter): Letter {
+  const item = init("");
+  item.successStatus = letter.successStatus;
+  item.displayType = letter.displayType;
+  item.char = letter.char;
 
-    return item;
-  }
+  return item;
 }
