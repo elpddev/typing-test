@@ -1,5 +1,5 @@
-import { DisplayType } from "./DisplayType";
-import { SuccessStatus } from "./SuccessStatus";
+import { DisplayType } from "../DisplayType";
+import { SuccessStatus } from "../SuccessStatus";
 
 export class Letter {
   char: string = "";

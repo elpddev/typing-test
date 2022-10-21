@@ -3,7 +3,7 @@ import { wordBank } from "../wordBank";
 import { getRandomItem } from "../getRandomItem";
 import * as WordMod from "./Word";
 import { Word } from './Word';
-import { Letter } from "../Letter";
+import { Letter } from "./Letter";
 import { SuccessStatus } from "../SuccessStatus";
 
 export interface Board {
