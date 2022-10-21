@@ -1,4 +1,4 @@
-import { wordBank } from "./wordBank";
+import { wordBank } from "./data/wordBank";
 
 export function getRandomItem(items: string[]) {
   const nextIndex = Math.floor(Math.random() * items.length);

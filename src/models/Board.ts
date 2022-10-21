@@ -1,5 +1,5 @@
 import { KeyCode } from "../KeyCode";
-import { wordBank } from "../wordBank";
+import { wordBank } from "../data/wordBank";
 import { getRandomItem } from "../getRandomItem";
 import * as WordMod from "./Word";
 import { Word } from "./Word";
