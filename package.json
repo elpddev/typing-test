@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "lint": "pnpm run lint:types",
+    "lint:types": "tsc",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "preview": "vite preview",
