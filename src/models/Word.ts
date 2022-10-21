@@ -1,5 +1,6 @@
 import { DisplayType } from "./DisplayType";
 import { Letter } from "./Letter";
+import * as LetterMod from "./Letter";
 import { SuccessStatus } from "./SuccessStatus";
 
 export function replaceLetter(
@@ -42,5 +43,5 @@ export function clone(word: Word): Word {
 }
 
 export function generateLetters(word: string): Letter[] {
-  return Array.from(word).map((char) => Letter.init(char));
+  return Array.from(word).map((char) => LetterMod.init(char));
 }
