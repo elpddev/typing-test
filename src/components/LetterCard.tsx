@@ -42,6 +42,7 @@ function styleLetterCard(
     borderLeft,
     backgroundColor,
     fontSize: "28px",
+    fontFamily: "monospace",
   };
 }
 
@@ -62,5 +63,9 @@ function styleBackgroundColor(isHighlight: boolean, isCurrent: boolean) {
     return "lightgreen";
   }
 
-  return "none";
+  if (isHighlight) {
+    return "#cccccc";
+  }
+
+  return "#f5f5f5";
 }

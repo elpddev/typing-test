@@ -15,8 +15,9 @@ export function WordCard({
     <Group
       spacing={3}
       sx={{
-        backgroundColor: isCurrent ? "lightgray" : "none",
+        backgroundColor: isCurrent ? "#f1f1f1" : "none",
       }}
+      p={8}
     >
       {word.letters.map((letter, index) => (
         <LetterCard
