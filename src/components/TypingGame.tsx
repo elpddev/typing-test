@@ -29,7 +29,11 @@ function useTypingGame() {
   const [wpm, setWpm] = useState(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typingValue, setTypingValue] = useState("");
-  const { timeLeft, start: startCount } = useCountdown(1_000, 10_000);
+  const {
+    timeLeft,
+    start: startCount,
+    stop: stopCount,
+  } = useCountdown(1_000, 10_000);
   const [initialized, setInitialized] = useState(false);
 
   const [board, setBoard] = useState(init());
@@ -52,6 +56,11 @@ function useTypingGame() {
     startCapture();
   }, []);
 
+  const stop = useCallback(() => {
+    stopCount();
+    stopCapture();
+  }, []);
+
   useEffect(() => {
     if (timeLeft <= 0) {
       stopCapture();
@@ -60,6 +69,10 @@ function useTypingGame() {
 
   useEffect(() => {
     restart();
+
+    () => {
+      stop();
+    };
   }, []);
 
   return {

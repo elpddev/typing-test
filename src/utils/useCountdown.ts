@@ -49,5 +49,6 @@ export function useCountdown(interval: number, length: number) {
   return {
     timeLeft,
     start,
+    stop,
   };
 }
