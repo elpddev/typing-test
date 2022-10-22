@@ -5,20 +5,12 @@ import { ActionBar } from "./ActionBar";
 import { KeyCode } from "../KeyCode";
 import { WordsCard } from "./WordsCard";
 import { init, moveByKey } from "../models/Board";
+import { useInterval } from "../utils/useInterval";
+import { useCountdown } from "../utils/useCountdown";
+import { useTypingCapture } from "../utils/useTypingCapture";
 
 export function TypingGame() {
-  const { typingEvent } = useTypingCapture();
-
-  const { currentWordIndex, wpm, timeLeft, board, restart, onTyping } =
-    useTypingGame();
-
-  useEffect(() => {
-    if (!typingEvent) {
-      return;
-    }
-
-    onTyping(typingEvent.code, typingEvent.char);
-  }, [typingEvent, onTyping]);
+  const { currentWordIndex, wpm, timeLeft, board, restart } = useTypingGame();
 
   return (
     <Container>
@@ -33,50 +25,42 @@ export function TypingGame() {
   );
 }
 
-function useTypingCapture() {
-  const [typingEvent, setTypingEvent] = useState<{
-    code: KeyCode;
-    char: string;
-  } | null>(null);
-  const typingCallback = useCallback((event: KeyboardEvent) => {
-    setTypingEvent({ code: event.code as KeyCode, char: event.key });
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("keydown", typingCallback);
-
-    return () => {
-      document.removeEventListener("keydown", typingCallback);
-    };
-  }, [typingCallback]);
-
-  return {
-    typingEvent,
-  };
-}
-
 function useTypingGame() {
   const [wpm, setWpm] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typingValue, setTypingValue] = useState("");
+  const { timeLeft, start: startCount } = useCountdown(1_000, 10_000);
+  const [initialized, setInitialized] = useState(false);
 
   const [board, setBoard] = useState(init());
 
+  const onTyping = useCallback(
+    (typingEvent: { code: KeyCode; char: string }) => {
+      setBoard((board) => {
+        const nextBoard = moveByKey(typingEvent.char, typingEvent.code, board);
+        return nextBoard;
+      });
+    },
+    []
+  );
+
+  const { startCapture, stopCapture, isCapturing } = useTypingCapture(onTyping);
+
   const restart = useCallback(() => {
     setBoard(init());
-  }, []);
-
-  const onTyping = useCallback((code: KeyCode, char: string) => {
-    setBoard((board) => {
-      const nextBoard = moveByKey(char, code, board);
-      return nextBoard;
-    });
+    startCount();
+    startCapture();
   }, []);
 
   useEffect(() => {
+    if (timeLeft <= 0) {
+      stopCapture();
+    }
+  }, [timeLeft]);
+
+  useEffect(() => {
     restart();
-  }, [restart]);
+  }, []);
 
   return {
     currentWordIndex,
