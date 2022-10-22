@@ -63,7 +63,7 @@ function useTypingGame() {
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      stopCapture();
+      stop();
     }
   }, [timeLeft]);
 
