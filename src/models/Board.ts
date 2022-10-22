@@ -202,3 +202,17 @@ export function moveForwardWord(board: Board): Board {
 
   return nextBoard;
 }
+
+export function getLetterSuccessAmount(board: Board) {
+  return board.words.reduce((wordsAcc, word) => {
+    const wordSum = word.letters.reduce((letterAcc, letter) => {
+      if (letter.successStatus === SuccessStatus.Success) {
+        return letterAcc + 1;
+      }
+
+      return letterAcc;
+    }, 0);
+
+    return wordsAcc + wordSum;
+  }, 0);
+}
