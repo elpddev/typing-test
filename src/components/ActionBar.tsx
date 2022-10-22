@@ -1,4 +1,4 @@
-import { NumberInput, Text, Group, Button } from "@mantine/core";
+import { NumberInput, Text, Group, Button, Stack } from "@mantine/core";
 
 export function ActionBar({
   wpm,
@@ -10,14 +10,18 @@ export function ActionBar({
   onRestart: () => void;
 }) {
   return (
-    <Group>
-      <Text>WPM</Text>
-      <NumberInput disabled value={wpm} />
+    <Stack sx={{ width: "400px" }}>
+      <Group position="apart">
+        <Text>WPM</Text>
+        <NumberInput disabled value={wpm} />
+      </Group>
 
-      <Text>Time left</Text>
-      <NumberInput disabled value={timeLeft} />
+      <Group position="apart">
+        <Text>Time left</Text>
+        <NumberInput disabled value={timeLeft} />
+      </Group>
 
       <Button onClick={onRestart}>Restart</Button>
-    </Group>
+    </Stack>
   );
 }

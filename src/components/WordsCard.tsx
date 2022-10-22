@@ -4,7 +4,14 @@ import { WordCard } from "./WordCard";
 
 export function WordsCard({ board }: { board: Board }) {
   return (
-    <ScrollArea style={{ height: 250 }}>
+    <ScrollArea
+      style={{
+        height: 250,
+        backgroundColor: "#fdfdfd",
+        border: "1px solid lightgray",
+      }}
+      p={15}
+    >
       <Group position="center" spacing={12}>
         {board.words.map((word, index) => (
           <WordCard

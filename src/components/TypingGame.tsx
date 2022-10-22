@@ -1,4 +1,4 @@
-import { Container } from "@mantine/core";
+import { Container, Title } from "@mantine/core";
 import { Stack } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { ActionBar } from "./ActionBar";
@@ -15,7 +15,7 @@ export function TypingGame() {
   return (
     <Container>
       <Stack align="center">
-        <div>Typing Test</div>
+        <Title order={1}>Typing Test</Title>
 
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
 
