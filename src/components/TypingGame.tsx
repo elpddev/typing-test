@@ -7,7 +7,7 @@ import { WordsCard } from "./WordsCard";
 import { init, moveByKey } from "../models/Board";
 import { useCountdown } from "../utils/useCountdown";
 import { useTypingCapture } from "../utils/useTypingCapture";
-import { useMeasureWpm } from "./useMeasureWpm";
+import { useMeasureWpm } from "../utils/useMeasureWpm";
 
 export function TypingGame() {
   const { wpm, timeLeft, board, restart } = useTypingGame();
