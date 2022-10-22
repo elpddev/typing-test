@@ -4,13 +4,18 @@ import { useCallback, useEffect, useState } from "react";
 import { ActionBar } from "./ActionBar";
 import { KeyCode } from "../KeyCode";
 import { WordsCard } from "./WordsCard";
-import { init, moveByKey } from "../models/Board";
+import {
+  Board,
+  init,
+  moveByKey,
+  getLetterSuccessAmount,
+} from "../models/Board";
 import { useInterval } from "../utils/useInterval";
 import { useCountdown } from "../utils/useCountdown";
 import { useTypingCapture } from "../utils/useTypingCapture";
 
 export function TypingGame() {
-  const { currentWordIndex, wpm, timeLeft, board, restart } = useTypingGame();
+  const { wpm, timeLeft, board, restart } = useTypingGame();
 
   return (
     <Container>
@@ -25,18 +30,16 @@ export function TypingGame() {
   );
 }
 
+const gameLength = 10_000;
+
 function useTypingGame() {
-  const [wpm, setWpm] = useState(0);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [typingValue, setTypingValue] = useState("");
   const {
     timeLeft,
     start: startCount,
     stop: stopCount,
-  } = useCountdown(1_000, 10_000);
-  const [initialized, setInitialized] = useState(false);
-
+  } = useCountdown(1_000, gameLength);
   const [board, setBoard] = useState(init());
+  const { wpm, start: startWpm, stop: stopWpm } = useMeasureWpm(board);
 
   const onTyping = useCallback(
     (typingEvent: { code: KeyCode; char: string }) => {
@@ -54,11 +57,13 @@ function useTypingGame() {
     setBoard(init());
     startCount();
     startCapture();
+    startWpm();
   }, []);
 
   const stop = useCallback(() => {
     stopCount();
     stopCapture();
+    stopWpm();
   }, []);
 
   useEffect(() => {
@@ -76,12 +81,43 @@ function useTypingGame() {
   }, []);
 
   return {
-    currentWordIndex,
     wpm,
     board,
     timeLeft,
-    typingValue,
     restart,
     onTyping,
+  };
+}
+
+function useMeasureWpm(board: Board) {
+  const { start: startInterval, stop: stopInterval } = useInterval();
+  const [wpm, setWpm] = useState(0);
+  const [boardLocal, setBoardLocal] = useState(board);
+
+  const start = useCallback(() => {
+    startInterval(200, (timePassed) => {
+      setBoardLocal((currBoard) => {
+        const successAmount = getLetterSuccessAmount(currBoard);
+        const wpmTemp = ((successAmount / (timePassed / 1000)) * 60) / 5;
+
+        setWpm(wpmTemp);
+
+        return currBoard;
+      });
+    });
+  }, []);
+
+  const stop = useCallback(() => {
+    stopInterval();
+  }, []);
+
+  useEffect(() => {
+    setBoardLocal(board);
+  }, [board]);
+
+  return {
+    wpm,
+    start,
+    stop,
   };
 }

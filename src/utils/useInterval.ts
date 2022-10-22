@@ -21,16 +21,24 @@ export function useInterval() {
     });
   }, []);
 
-  const start = useCallback((intervalAmount: number, onTick: () => void) => {
-    stop();
+  const start = useCallback(
+    (intervalAmount: number, onTick: (timePassed: number) => void) => {
+      stop();
 
-    const newId = setInterval(() => {
-      onTick();
-    }, intervalAmount);
+      const startTime = Date.now();
 
-    setId(newId);
-    setStatus(IntervalStatus.On);
-  }, []);
+      const newId = setInterval(() => {
+        const currentTime = Date.now();
+        const diff = currentTime - startTime;
+
+        onTick(diff);
+      }, intervalAmount);
+
+      setId(newId);
+      setStatus(IntervalStatus.On);
+    },
+    []
+  );
 
   // useEffect(() => {
   //   return () => stop();
