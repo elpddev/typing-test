@@ -1,5 +1,7 @@
 # Typing Test
 
+![image](https://user-images.githubusercontent.com/17731302/197336767-9ae1b97b-6a58-42a5-80ec-ae4217dbc465.png)
+
 Example project for typing tester in React
 
 This project shows an example of typing test implementation in React.
