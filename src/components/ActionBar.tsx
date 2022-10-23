@@ -10,18 +10,8 @@ export function ActionBar({
   onRestart: () => void;
 }) {
   return (
-    <Stack sx={{ width: "400px" }}>
-      <Group position="apart">
-        <Text>WPM</Text>
-        <NumberInput disabled value={wpm} />
-      </Group>
-
-      <Group position="apart">
-        <Text>Time left</Text>
-        <NumberInput disabled value={timeLeft} />
-      </Group>
-
+    <Group position="center">
       <Button onClick={onRestart}>Restart</Button>
-    </Stack>
+    </Group>
   );
 }

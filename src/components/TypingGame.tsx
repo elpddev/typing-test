@@ -1,4 +1,4 @@
-import { Container, Title } from "@mantine/core";
+import { Container, Group, Title } from "@mantine/core";
 import { Stack } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { ActionBar } from "./ActionBar";
@@ -8,18 +8,23 @@ import { init, moveByKey } from "../models/Board";
 import { useCountdown } from "../utils/useCountdown";
 import { useTypingCapture } from "../utils/useTypingCapture";
 import { useMeasureWpm } from "../utils/useMeasureWpm";
+import { StatsBar } from "./StatsBar";
 
 export function TypingGame() {
   const { wpm, timeLeft, board, restart } = useTypingGame();
 
   return (
     <Container>
-      <Stack align="center">
-        <Title order={1}>Typing Test</Title>
+      <Stack align="stretch">
+        <Group position="center">
+          <Title order={1}>Typing Test</Title>
+        </Group>
 
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
 
         <WordsCard board={board} />
+
+        <StatsBar wpm={wpm} timeLeft={timeLeft} />
       </Stack>
     </Container>
   );
