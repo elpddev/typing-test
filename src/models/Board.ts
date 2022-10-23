@@ -57,8 +57,6 @@ export function generateWords(amount: number): Word[] {
 }
 
 export function moveByKey(char: string, code: KeyCode, board: Board): Board {
-  console.log("** moveByKey 1");
-
   if (code === KeyCode.Backspace) {
     if (isAtStartOfFirstWord(board)) {
       return board;
@@ -68,7 +66,6 @@ export function moveByKey(char: string, code: KeyCode, board: Board): Board {
   }
 
   const currLetter = getCurrentLetter(board);
-  console.log("** moveByKey 2", { currLetterChar: currLetter.char, code });
 
   if (code === KeyCode.Space && currLetter.char !== " ") {
     if (board.currentWordLetterIndex === 0) {
