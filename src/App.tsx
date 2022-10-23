@@ -1,9 +1,10 @@
 import { MantineProvider } from "@mantine/core";
+import { TypingGame } from "./components/TypingGame";
 
-function App() {
-  <MantineProvider withGlobalStyles withNormalizeCSS>
-    <div></div>
-  </MantineProvider>;
+export function App() {
+  return (
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <TypingGame />
+    </MantineProvider>
+  );
 }
-
-export default App;
