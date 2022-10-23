@@ -25,7 +25,7 @@ export function TypingGame() {
   );
 }
 
-const gameLength = 10_000;
+const gameLength = 60_000;
 
 function useTypingGame() {
   const {
@@ -46,7 +46,7 @@ function useTypingGame() {
     []
   );
 
-  const { startCapture, stopCapture, isCapturing } = useTypingCapture(onTyping);
+  const { startCapture, stopCapture } = useTypingCapture(onTyping);
 
   const restart = useCallback(() => {
     setBoard(init());

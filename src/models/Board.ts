@@ -5,6 +5,7 @@ import * as WordMod from "./Word";
 import { Word } from "./Word";
 import * as LetterMod from "./Letter";
 import { SuccessStatus } from "./SuccessStatus";
+import { Letter } from "./Letter";
 
 export interface Board {
   words: Word[];
@@ -35,7 +36,7 @@ export function clone(board: Board): Board {
 }
 
 export function generateWords(amount: number): Word[] {
-  const gameWords = [];
+  const gameWords: Word[] = [];
 
   for (let i = 0; i < amount; i += 1) {
     const nextWord = getRandomItem(wordBank);
@@ -43,7 +44,16 @@ export function generateWords(amount: number): Word[] {
     gameWords.push(nextGameWord);
   }
 
-  return gameWords;
+  const first = gameWords.shift();
+
+  const gameWordsWithSpaces = gameWords.reduce(
+    (all, word) => {
+      return [...all, WordMod.init(" "), word];
+    },
+    [first] as Word[]
+  );
+
+  return gameWordsWithSpaces;
 }
 
 export function moveByKey(char: string, code: KeyCode, board: Board): Board {
@@ -55,7 +65,9 @@ export function moveByKey(char: string, code: KeyCode, board: Board): Board {
     return moveBackward(board);
   }
 
-  if (code === KeyCode.Space) {
+  const currLetter = getCurrentLetter(board);
+
+  if (code === KeyCode.Space && currLetter.char !== " ") {
     if (board.currentWordLetterIndex === 0) {
       return board;
     }
@@ -215,4 +227,11 @@ export function getLetterSuccessAmount(board: Board) {
 
     return wordsAcc + wordSum;
   }, 0);
+}
+
+function getCurrentLetter(board: Board): Letter {
+  const currWord = board.words[board.currentWordIndex];
+  const currLetter = currWord.letters[board.currentWordLetterIndex];
+
+  return currLetter;
 }

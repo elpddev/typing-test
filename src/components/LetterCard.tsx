@@ -43,6 +43,7 @@ function styleLetterCard(
     backgroundColor,
     fontSize: "28px",
     fontFamily: "monospace",
+    whiteSpace: "pre",
   };
 }
 
