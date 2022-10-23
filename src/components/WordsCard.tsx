@@ -12,7 +12,7 @@ export function WordsCard({ board }: { board: Board }) {
       }}
       p={15}
     >
-      <Group position="center" spacing={12}>
+      <Group spacing={0} align="center">
         {board.words.map((word, index) => (
           <WordCard
             key={index}

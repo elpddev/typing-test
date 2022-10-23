@@ -7,6 +7,7 @@ export function useTypingCapture(
   const [isCapturing, setIsCapturing] = useState(false);
 
   const typingCallback = useCallback((event: KeyboardEvent) => {
+    event.stopPropagation();
     onCapture({ code: event.code as KeyCode, char: event.key });
   }, []);
 
