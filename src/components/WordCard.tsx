@@ -1,7 +1,8 @@
 import { Box, Group } from "@mantine/core";
-import { memo } from "react";
+import { memo, useContext, useEffect, useRef } from "react";
 import { Word } from "../models/Word";
 import { LetterCard } from "./LetterCard";
+import { TypingAreaContext } from "./TypingAreaProvier";
 
 function WordCardFn({
   word,
@@ -13,8 +14,21 @@ function WordCardFn({
   currentLetterIndex: number;
 }) {
   // console.log('** word card', word.guid);
+  const typingArea = useContext(TypingAreaContext);
+  const ref = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (!isCurrent) {
+      return;
+    }
+
+    const top = ref?.current?.offsetTop || 0;
+    typingArea.scrollToSelf(top);
+  }, [isCurrent, typingArea, ref]);
+
   return (
     <Group
+      ref={ref as any}
       spacing={3}
       sx={{
         backgroundColor: isCurrent ? "#f1f1f1" : "none",

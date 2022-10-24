@@ -1,9 +1,12 @@
 import { Group, ScrollArea } from "@mantine/core";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { Board } from "../models/Board";
+import { TypingAreaProvider } from "./TypingAreaProvier";
 import { WordCard } from "./WordCard";
 
 function WordsCardFn({ board }: { board: Board }) {
+  const viewport = useRef<HTMLDivElement>();
+
   return (
     <ScrollArea
       style={{
@@ -12,20 +15,25 @@ function WordsCardFn({ board }: { board: Board }) {
         border: "1px solid lightgray",
       }}
       p={15}
+      viewportRef={viewport as any}
     >
-      <Group spacing={0} align="center">
-        {board.words.map((word, index) => {
-          const isCurrent = index === board.currentWordIndex;
-          return (
-            <WordCard
-              key={word.guid}
-              word={word}
-              isCurrent={isCurrent}
-              currentLetterIndex={isCurrent ? board.currentWordLetterIndex : 0}
-            />
-          );
-        })}
-      </Group>
+      <TypingAreaProvider viewport={viewport as any}>
+        <Group spacing={0} align="center">
+          {board.words.map((word, index) => {
+            const isCurrent = index === board.currentWordIndex;
+            return (
+              <WordCard
+                key={word.guid}
+                word={word}
+                isCurrent={isCurrent}
+                currentLetterIndex={
+                  isCurrent ? board.currentWordLetterIndex : 0
+                }
+              />
+            );
+          })}
+        </Group>
+      </TypingAreaProvider>
     </ScrollArea>
   );
 }
