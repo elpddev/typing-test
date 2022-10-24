@@ -1,8 +1,9 @@
 import { Box, Group } from "@mantine/core";
+import { memo } from "react";
 import { Word } from "../models/Word";
 import { LetterCard } from "./LetterCard";
 
-export function WordCard({
+function WordCardFn({
   word,
   isCurrent,
   currentLetterIndex,
@@ -11,6 +12,7 @@ export function WordCard({
   isCurrent: boolean;
   currentLetterIndex: number;
 }) {
+  // console.log('** word card', word.guid);
   return (
     <Group
       spacing={3}
@@ -21,7 +23,7 @@ export function WordCard({
     >
       {word.letters.map((letter, index) => (
         <LetterCard
-          key={index}
+          key={letter.guid}
           letter={letter}
           isHighlight={isCurrent}
           isCurrent={isCurrent && index === currentLetterIndex}
@@ -30,3 +32,5 @@ export function WordCard({
     </Group>
   );
 }
+
+export const WordCard = memo(WordCardFn);

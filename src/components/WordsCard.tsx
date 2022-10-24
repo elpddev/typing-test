@@ -1,8 +1,9 @@
 import { Group, ScrollArea } from "@mantine/core";
+import { memo } from "react";
 import { Board } from "../models/Board";
 import { WordCard } from "./WordCard";
 
-export function WordsCard({ board }: { board: Board }) {
+function WordsCardFn({ board }: { board: Board }) {
   return (
     <ScrollArea
       style={{
@@ -13,15 +14,20 @@ export function WordsCard({ board }: { board: Board }) {
       p={15}
     >
       <Group spacing={0} align="center">
-        {board.words.map((word, index) => (
-          <WordCard
-            key={index}
-            word={word}
-            isCurrent={index === board.currentWordIndex}
-            currentLetterIndex={board.currentWordLetterIndex}
-          />
-        ))}
+        {board.words.map((word, index) => {
+          const isCurrent = index === board.currentWordIndex;
+          return (
+            <WordCard
+              key={word.guid}
+              word={word}
+              isCurrent={isCurrent}
+              currentLetterIndex={isCurrent ? board.currentWordLetterIndex : 0}
+            />
+          );
+        })}
       </Group>
     </ScrollArea>
   );
 }
+
+export const WordsCard = memo(WordsCardFn);

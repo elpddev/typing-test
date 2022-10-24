@@ -19,14 +19,10 @@ export function TypingGame() {
         <Group position="center">
           <Title order={1}>Typing Test</Title>
         </Group>
-
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
-
         <Space h="xl" />
         <Space h="xl" />
-
-        <WordsCard board={board} />
-
+        <WordsCard board={board} />;
         <StatsBar wpm={wpm} timeLeft={timeLeft} />
       </Stack>
     </Container>
@@ -41,7 +37,7 @@ function useTypingGame() {
     start: startCount,
     stop: stopCount,
   } = useCountdown(1_000, gameLength);
-  const [board, setBoard] = useState(init());
+  const [board, setBoard] = useState(() => init());
   const { wpm, start: startWpm, stop: stopWpm } = useMeasureWpm(board);
 
   const onTyping = useCallback(

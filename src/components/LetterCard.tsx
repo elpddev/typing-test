@@ -1,9 +1,9 @@
 import { Text } from "@mantine/core";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { Letter } from "../models/Letter";
 import { SuccessStatus } from "../models/SuccessStatus";
 
-export function LetterCard({
+function LetterCardFn({
   letter,
   isCurrent,
   isHighlight,
@@ -70,3 +70,5 @@ function styleBackgroundColor(isHighlight: boolean, isCurrent: boolean) {
 
   return "#f5f5f5";
 }
+
+export const LetterCard = memo(LetterCardFn);

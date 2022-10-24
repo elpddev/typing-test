@@ -14,9 +14,10 @@ export interface Board {
   currentWordLetterIndex: number;
 }
 
-export function init(): Board {
+export function init(props: Partial<Board> = {}): Board {
+  // console.log('** board => init');
   const item = {
-    words: generateWords(10),
+    words: props.words || generateWords(100),
     successStatus: SuccessStatus.Initial,
     currentWordIndex: 0,
     currentWordLetterIndex: 0,
@@ -26,7 +27,7 @@ export function init(): Board {
 }
 
 export function clone(board: Board): Board {
-  const item = init();
+  const item = init({ words: [...board.words] });
   item.words = [...board.words];
   item.successStatus = board.successStatus;
   item.currentWordIndex = board.currentWordIndex;
@@ -36,6 +37,7 @@ export function clone(board: Board): Board {
 }
 
 export function generateWords(amount: number): Word[] {
+  // console.log('** generateWords');
   const gameWords: Word[] = [];
 
   for (let i = 0; i < amount; i += 1) {

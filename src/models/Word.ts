@@ -2,6 +2,7 @@ import { DisplayType } from "./DisplayType";
 import { Letter } from "./Letter";
 import * as LetterMod from "./Letter";
 import { SuccessStatus } from "./SuccessStatus";
+import { v4 } from "uuid";
 
 export function replaceLetter(
   newLetter: Letter,
@@ -21,6 +22,7 @@ export interface Word {
   letters: Letter[];
   successStatus: SuccessStatus;
   displayType: DisplayType;
+  guid: string;
 }
 
 export function init(wordStr: string): Word {
@@ -28,6 +30,7 @@ export function init(wordStr: string): Word {
     displayType: DisplayType.Initial,
     successStatus: SuccessStatus.Initial,
     letters: generateLetters(wordStr),
+    guid: v4(),
   };
 
   return item;

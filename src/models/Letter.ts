@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import { DisplayType } from "./DisplayType";
 import { SuccessStatus } from "./SuccessStatus";
 
@@ -5,6 +6,7 @@ export interface Letter {
   char: string;
   successStatus: SuccessStatus;
   displayType: DisplayType;
+  guid: string;
 }
 
 export function init(char: string): Letter {
@@ -12,6 +14,7 @@ export function init(char: string): Letter {
     successStatus: SuccessStatus.Initial,
     displayType: DisplayType.Initial,
     char,
+    guid: v4(),
   };
 
   return item;
