@@ -8,6 +8,7 @@ specifiers:
   '@mantine/hooks': ^5.5.5
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
+  '@types/uuid': ^8.3.4
   '@vitejs/plugin-react': ^2.1.0
   '@vitest/coverage-c8': ^0.24.3
   husky: ^8.0.1
@@ -33,6 +34,7 @@ dependencies:
 devDependencies:
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
+  '@types/uuid': 8.3.4
   '@vitejs/plugin-react': 2.1.0_vite@3.1.8
   '@vitest/coverage-c8': 0.24.3
   husky: 8.0.1
@@ -718,6 +720,10 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+
+  /@types/uuid/8.3.4:
+    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
+    dev: true
 
   /@vitejs/plugin-react/2.1.0_vite@3.1.8:
     resolution: {integrity: sha512-am6rPyyU3LzUYne3Gd9oj9c4Rzbq5hQnuGXSMT6Gujq45Il/+bunwq3lrB7wghLkiF45ygMwft37vgJ/NE8IAA==}
