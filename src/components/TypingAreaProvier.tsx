@@ -33,7 +33,7 @@ export function TypingAreaProvider({
         return;
       }
 
-      viewport.current.scrollTo({ top });
+      viewport.current.scrollTo({ top, behavior: "smooth" });
     },
     [viewport]
   );
