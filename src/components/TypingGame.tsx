@@ -22,7 +22,7 @@ export function TypingGame() {
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
         <Space h="xl" />
         <Space h="xl" />
-        <WordsCard board={board} />;
+        <WordsCard board={board} />
         <StatsBar wpm={wpm} timeLeft={timeLeft} />
       </Stack>
     </Container>
