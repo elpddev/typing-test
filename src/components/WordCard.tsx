@@ -29,13 +29,13 @@ function WordCardFn({
   return (
     <Group
       ref={ref as any}
-      spacing={3}
+      spacing={0}
       sx={
         {
           // backgroundColor: isCurrent ? "#f1f1f1" : "none",
         }
       }
-      p={8}
+      p={0}
     >
       {word.letters.map((letter, index) => (
         <LetterCard
