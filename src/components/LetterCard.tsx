@@ -30,7 +30,7 @@ function styleLetterCard(
   isHighlight: boolean
 ): Record<string, any> {
   const color = styleColor(letter);
-  const backgroundColor = styleBackgroundColor(isHighlight, isCurrent);
+  const backgroundColor = styleBackgroundColor(letter, isHighlight, isCurrent);
   let borderLeft = "";
 
   if (isCurrent) {
@@ -59,7 +59,11 @@ function styleColor(letter: Letter) {
   return "#727272";
 }
 
-function styleBackgroundColor(isHighlight: boolean, isCurrent: boolean) {
+function styleBackgroundColor(
+  letter: Letter,
+  isHighlight: boolean,
+  isCurrent: boolean
+) {
   /*
   if (isCurrent) {
     return "lightgreen";

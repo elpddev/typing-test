@@ -20,14 +20,16 @@ export function TypingGame() {
       fluid={true}
     >
       <Stack align="stretch" sx={{ height: "100%" }}>
-        <Group position="center">
-          <Title order={1}>T y p i n g _ T e s t</Title>
-        </Group>
-        <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
-        <Space h="xl" />
-        <Space h="xl" />
-        <WordsCard board={board} />
-        <StatsBar wpm={wpm} timeLeft={timeLeft} />
+        <Stack sx={{ width: "800px", alignSelf: "center" }}>
+          <Group position="center">
+            <Title order={1}>T y p i n g _ T e s t</Title>
+          </Group>
+          <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
+          <Space h="xl" />
+          <Space h="xl" />
+          <WordsCard board={board} />
+          <StatsBar wpm={wpm} timeLeft={timeLeft} />
+        </Stack>
       </Stack>
     </Container>
   );
