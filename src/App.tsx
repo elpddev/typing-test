@@ -3,7 +3,13 @@ import { TypingGame } from "./components/TypingGame";
 
 export function App() {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        colorScheme: "dark",
+      }}
+    >
       <TypingGame />
     </MantineProvider>
   );

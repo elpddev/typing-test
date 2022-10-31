@@ -11,7 +11,9 @@ export function ActionBar({
 }) {
   return (
     <Group position="center">
-      <Button onClick={onRestart}>Restart</Button>
+      <Button color="yellow" uppercase onClick={onRestart}>
+        Restart
+      </Button>
     </Group>
   );
 }

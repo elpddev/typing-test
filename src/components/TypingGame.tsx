@@ -14,10 +14,14 @@ export function TypingGame() {
   const { wpm, timeLeft, board, restart } = useTypingGame();
 
   return (
-    <Container sx={{ height: "100vh" }} p={25}>
+    <Container
+      sx={{ height: "100vh", backgroundColor: "#323437" }}
+      p={25}
+      fluid={true}
+    >
       <Stack align="stretch" sx={{ height: "100%" }}>
         <Group position="center">
-          <Title order={1}>Typing Test</Title>
+          <Title order={1}>T y p i n g _ T e s t</Title>
         </Group>
         <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
         <Space h="xl" />

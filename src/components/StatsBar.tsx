@@ -22,7 +22,8 @@ export function StatsBar({ wpm, timeLeft }: { wpm: number; timeLeft: number }) {
 }
 
 const StatsBox = styled.div({
-  backgroundColor: "rgb(253, 253, 253)",
-  border: "1px solid lightgray",
+  // backgroundColor: "rgb(253, 253, 253)",
+  // border: "1px solid lightgray",
+  color: "#c8c7c7",
   padding: "5px",
 });

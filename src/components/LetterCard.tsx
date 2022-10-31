@@ -49,26 +49,30 @@ function styleLetterCard(
 
 function styleColor(letter: Letter) {
   if (letter.successStatus === SuccessStatus.Fail) {
-    return "red";
+    return "#ed5252";
   }
 
   if (letter.successStatus === SuccessStatus.Success) {
-    return "green";
+    return "#d7d7d7";
   }
 
-  return "black";
+  return "#727272";
 }
 
 function styleBackgroundColor(isHighlight: boolean, isCurrent: boolean) {
+  /*
   if (isCurrent) {
     return "lightgreen";
   }
+  */
 
+  /*
   if (isHighlight) {
     return "#cccccc";
   }
+  */
 
-  return "#f5f5f5";
+  return "#323437";
 }
 
 export const LetterCard = memo(LetterCardFn);

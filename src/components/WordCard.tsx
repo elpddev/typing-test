@@ -30,9 +30,11 @@ function WordCardFn({
     <Group
       ref={ref as any}
       spacing={3}
-      sx={{
-        backgroundColor: isCurrent ? "#f1f1f1" : "none",
-      }}
+      sx={
+        {
+          // backgroundColor: isCurrent ? "#f1f1f1" : "none",
+        }
+      }
       p={8}
     >
       {word.letters.map((letter, index) => (

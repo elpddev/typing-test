@@ -11,8 +11,7 @@ function WordsCardFn({ board }: { board: Board }) {
     <ScrollArea
       style={{
         height: 250,
-        backgroundColor: "#fdfdfd",
-        border: "1px solid lightgray",
+        backgroundColor: "#323437",
       }}
       p={15}
       viewportRef={viewport as any}

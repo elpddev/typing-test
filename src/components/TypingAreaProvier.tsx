@@ -25,15 +25,15 @@ export function TypingAreaProvider({
   children: ReactNode;
 }) {
   const scrollToSelf = useCallback(
-    (top: number) => {
+    (target: number) => {
       if (
-        top >= viewport.current.scrollTop &&
-        top < viewport.current.scrollTop + viewport.current.clientHeight
+        target >= viewport.current.scrollTop &&
+        target < viewport.current.scrollTop + viewport.current.clientHeight
       ) {
         return;
       }
 
-      viewport.current.scrollTo({ top, behavior: "smooth" });
+      viewport.current.scrollTo({ top: target, behavior: "smooth" });
     },
     [viewport]
   );
