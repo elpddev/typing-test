@@ -1,6 +1,6 @@
 # Typing Test
 
-![image](https://user-images.githubusercontent.com/17731302/197336767-9ae1b97b-6a58-42a5-80ec-ae4217dbc465.png)
+![image](https://user-images.githubusercontent.com/17731302/199082253-205c5b86-2449-4243-a3da-8796efd2941c.png)
 
 Example project for typing tester in React
 
