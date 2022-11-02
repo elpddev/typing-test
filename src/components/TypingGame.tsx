@@ -25,7 +25,8 @@ export function TypingGame() {
             <Title order={1} sx={{
                 textTransform: "uppercase",
                 textShadow: "-2px 3px 3px #f28822",
-              }}>T y p i n g  T e s t</Title>
+                whiteSpace: "pre",
+              }}>T y p i n g   T e s t</Title>
           </Group>
           <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
           <Space h="xl" />
