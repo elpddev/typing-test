@@ -22,7 +22,10 @@ export function TypingGame() {
       <Stack align="stretch" sx={{ height: "100%" }}>
         <Stack sx={{ width: "800px", alignSelf: "center" }}>
           <Group position="center">
-            <Title order={1}>T y p i n g _ T e s t</Title>
+            <Title order={1} sx={{
+                textTransform: "uppercase",
+                textShadow: "-2px 3px 3px #f28822",
+              }}>T y p i n g  T e s t</Title>
           </Group>
           <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
           <Space h="xl" />
