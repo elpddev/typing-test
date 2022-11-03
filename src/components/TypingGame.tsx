@@ -26,7 +26,7 @@ export function TypingGame() {
                 textTransform: "uppercase",
                 textShadow: "-2px 3px 3px #f28822",
                 whiteSpace: "pre",
-              }}>T y p i n g   T e s t</Title>
+              }}>Typing Test</Title>
           </Group>
           <ActionBar wpm={wpm} timeLeft={timeLeft} onRestart={restart} />
           <Space h="xl" />
