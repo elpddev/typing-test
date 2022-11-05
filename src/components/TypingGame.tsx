@@ -20,7 +20,7 @@ export function TypingGame() {
       p={25}
       fluid={true}
     >
-      <Stack align="stretch" sx={{ height: "100%" }}>
+      <Stack align="stretch" sx={{ height: "100%", position: "relative" }}>
         <Back />
         <Stack sx={{ width: "800px", alignSelf: "center" }}>
           <Group position="center">
@@ -108,7 +108,7 @@ function useTypingGame() {
 const Area = styled.div`
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: absolute;
 `;
 
