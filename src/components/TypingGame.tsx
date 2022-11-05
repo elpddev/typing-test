@@ -1,6 +1,6 @@
-import { Container, Group, Space, Title } from "@mantine/core";
+import { Box, Container, Group, Space, Title } from "@mantine/core";
 import { Stack } from "@mantine/core";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ActionBar } from "./ActionBar";
 import { KeyCode } from "../KeyCode";
 import { WordsCard } from "./WordsCard";
@@ -122,7 +122,6 @@ const Circles = styled.ul`
 
   li {
     position: absolute;
-    display: block;
     list-style: none;
     width: 20px;
     height: 20px;
@@ -135,6 +134,7 @@ const Circles = styled.ul`
     left: 25%;
     width: 80px;
     height: 80px;
+    font-size: 40px;
     animation-delay: 0s;
   }
 
@@ -144,6 +144,7 @@ const Circles = styled.ul`
     height: 20px;
     animation-delay: 2s;
     animation-duration: 12s;
+    font-size: 10px;
   }
 
   li:nth-child(3) {
@@ -151,6 +152,7 @@ const Circles = styled.ul`
     width: 20px;
     height: 20px;
     animation-delay: 4s;
+    font-size: 10px;
   }
 
   li:nth-child(4) {
@@ -159,6 +161,7 @@ const Circles = styled.ul`
     height: 60px;
     animation-delay: 0s;
     animation-duration: 18s;
+    font-size: 30px;
   }
 
   li:nth-child(5) {
@@ -166,6 +169,7 @@ const Circles = styled.ul`
     width: 20px;
     height: 20px;
     animation-delay: 0s;
+    font-size: 10px;
   }
 
   li:nth-child(6) {
@@ -173,6 +177,7 @@ const Circles = styled.ul`
     width: 110px;
     height: 110px;
     animation-delay: 3s;
+    font-size: 55px;
   }
 
   li:nth-child(7) {
@@ -180,6 +185,7 @@ const Circles = styled.ul`
     width: 150px;
     height: 150px;
     animation-delay: 7s;
+    font-size: 75px;
   }
 
   li:nth-child(8) {
@@ -188,6 +194,7 @@ const Circles = styled.ul`
     height: 25px;
     animation-delay: 15s;
     animation-duration: 45s;
+    font-size: 12px;
   }
 
   li:nth-child(9) {
@@ -196,6 +203,7 @@ const Circles = styled.ul`
     height: 15px;
     animation-delay: 2s;
     animation-duration: 35s;
+    font-size: 7px;
   }
 
   li:nth-child(10) {
@@ -204,6 +212,7 @@ const Circles = styled.ul`
     height: 150px;
     animation-delay: 0s;
     animation-duration: 11s;
+    font-size: 75px;
   }
 
   @keyframes animate {
@@ -225,17 +234,39 @@ function Back() {
   return (
     <Area>
       <Circles>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        {Array(10)
+          .fill(null)
+          .map((_a, index) => (
+            <Circle key={index} />
+          ))}
       </Circles>
     </Area>
+  );
+}
+
+const letters = Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+const CircleMain = styled.li`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LetterLayout = styled.div`
+  align-self: last baseline;
+`;
+
+function Circle() {
+  const letter = useMemo(() => {
+    const index = Math.floor(Math.random() * 26);
+    return letters[index];
+  }, []);
+
+  return (
+    <CircleMain>
+      <LetterLayout>{letter}</LetterLayout>
+    </CircleMain>
   );
 }
