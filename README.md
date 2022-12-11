@@ -35,3 +35,19 @@ Uses functional pattern of:
 1. Simple structural representation of the pieces state. Board/Word/Letter.
 1. Immutable functions per module for mutating the state for easier reasoning about state changes.
 1. Smart immutable - tree include changed branch and unchanged branches - So change detection will stop at unchanged branches.
+
+## Development
+
+### Running Development Server
+
+```shell
+pnpm install
+```
+
+```shell
+pnpm dev
+```
+
+### Deployment
+
+There is an automatic deployment that is done through github workflow. Each push to `main` will activate the workflow and try to deploy to Github pages.
